@@ -1,0 +1,1 @@
+<div id="footer">Przykładowy blog o podróżowaniu</div>

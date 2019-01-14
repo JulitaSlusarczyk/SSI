@@ -26,6 +26,15 @@ body
     color: black;
     border-left: 2px dotted #cccccc;
 }
+.MenuOptionAdmin
+{
+    margin-top:5px;
+    margin-bottom:5px;
+    padding: 10px;
+    float:left;
+    color: blueviolet;
+    border-right: 2px dotted #cccccc;
+}
 .MenuOption:hover
 {
     background-color: #4d81d4;

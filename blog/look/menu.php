@@ -26,7 +26,7 @@
 				if(isset($_SESSION['uss']))
 				{
 					$usss= $_SESSION['uss'];
-					echo "<div class='MenuOption'>Witaj, ".$usss."</div>";
+					echo "<div class='MenuOption' style='cursor:default;'>Witaj, ".$usss."</div>";
 				}
 			?>
             <div style="clear:both;"></div>

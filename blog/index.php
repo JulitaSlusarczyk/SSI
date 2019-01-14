@@ -4,7 +4,6 @@
     {
 
 	}
-	else $usss= $_SESSION['uss'];
 	$count=0;
 	
 	require_once('/var/www/vhosts/letthejourneybegin.5v.pl/httpdocs/includes/db_connect.php');
@@ -80,28 +79,10 @@
 				}
 			?>
         	
-
-    
         </div>
-        <div class="sideBar">
-            <div id="myimg">
-                <img src="zdj2.jpg" style="border-radius:60px; margin-left:auto; margin-bottom:auto;"/>
-            </div>
-			<div id="opis" style="text-align: center;">
-				<br/> <h4>Opis </h4><br/> 
-				Lorem ipsum dolor sit amet, summo democritum vel in, nam ut impedit volumus platonem, ea sed simul labore. Et mel solum dolor offendit, partiendo repudiare duo ad, mei minim dicam nominavi id. Ne eius omittam sea. Eu mel dicit regione propriae, has ut purto nostro. <br/>
-			</div>
-			<div id="tagi">
-			<br/> <h4>Tagi </h4>
-				<ul id="tags">
-					<li><a>Tag1</a></li>
-					<li><a>Tag2</a></li>
-					<li><a>Tag3</a></li>
-					<li><a>Tag4</a></li>
-				</ul>
-			</div>
-        </div>
-        <div style="clear:both;"></div>
+    <?php
+		require_once('/var/www/vhosts/letthejourneybegin.5v.pl/httpdocs/look/sidebar.php');
+	?>
         
     </div>
 <?php

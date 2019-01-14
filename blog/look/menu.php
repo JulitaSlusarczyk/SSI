@@ -5,7 +5,7 @@
 					echo "<div class='MenuOption' style='border-right: 2px dotted #cccccc;'><a href='logout.php'>Wyloguj się</a></div>";
 					if($_SESSION['rola']=="admin")
 					{
-						echo "<div class='MenuOption'>Admin</div>";
+						echo "<div class='MenuOption'><a href='admin.php'>Admin</a></div>";
 						echo "<div class='MenuOption'>Dodaj post</div>";
 					}
 					if($_SESSION['rola']=="moderator")

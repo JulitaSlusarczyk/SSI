@@ -1,0 +1,183 @@
+body
+{
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color:#c1d4f2;
+}
+#menu
+{   
+	border-radius:10px;
+    padding: 10px;
+    background-color:#547ec2;
+    width:91%;
+}
+#szukaj
+{
+    float:right;
+    padding: 10px;
+}
+.MenuOption
+{
+    margin-top:5px;
+    margin-bottom:5px;
+    padding: 10px;
+    float:right;
+    color: black;
+    border-left: 2px dotted #cccccc;
+}
+.MenuOption:hover
+{
+    background-color: #4d81d4;
+    cursor: pointer;
+}
+#logo
+{
+    width:30%;
+    float:left;
+    margin-bottom:20px;
+}
+#tytul
+{
+    width: 63%;
+    font-size: 50px;
+    margin-top: 150px;
+    float:left;
+    margin-bottom:20px;
+}
+.sideBar
+{
+    border-radius:10px;
+    background-color:#658fd3;
+    padding: 20px;
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    float:left;
+    min-width: 100px;
+    width: 17%;
+    text-align: center;
+}
+#glowna
+{
+    margin-right: 10px;
+    width: 70%;
+    float:left;
+}
+#footer
+{
+    border-radius:10px;
+    background-color:#547ec2;
+    width: 91%;
+    text-align: center;
+    padding:10px;
+}
+.post
+{
+    border-radius:10px;
+    background-color:#658fd3;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    min-width: 300px;
+    padding: 20px;
+    width: 93%;
+}
+
+.czytajDalej:hover
+{
+	cursor: pointer;
+	box-shadow: 2px 4px 10px #180463;
+}
+
+.comment a:hover
+{
+	text-decoration: underline black;
+}
+
+.textpost:hover
+{
+    cursor: default;
+}
+
+#opis:hover
+{
+    cursor: default;
+}
+
+a:link
+{
+    text-decoration: none;
+    color:black;
+}
+
+a:active 
+{
+	color:black;
+}
+
+a:visited 
+{
+	color:black;
+}
+
+#tags
+{
+	list-style: none;
+	padding: 0;
+}
+
+#tags li
+{
+	padding: 2px;
+	margin-bottom: 2px;
+	display: inline-block;
+	box-shadow: 2px 4px 10px #4823ce;
+}
+
+#tags li:hover 
+{
+	cursor: pointer;
+	box-shadow: 2px 4px 10px #180463;
+}
+
+.tag a
+{
+	padding: 2px;
+	margin-bottom: 2px;
+	box-shadow: 2px 4px 10px #4823ce;
+}
+
+.tag a:hover
+{
+	cursor: pointer;
+	box-shadow: 2px 4px 10px #180463;
+}
+
+.textpost h2
+{
+	margin-top:15px;
+	float: left;
+	margin:0;
+}
+
+.textpost h2:hover
+{
+	cursor: pointer;
+	box-shadow: 2px 4px 10px #180463;
+}
+
+.textpost p
+{
+	margin:0;
+}
+
+
+#opis h4
+{
+	margin:0;
+}
+
+#tagi h4
+{
+	margin:0;
+}

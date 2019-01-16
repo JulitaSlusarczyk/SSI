@@ -1,5 +1,6 @@
 <?php
     session_start();
+    date_default_timezone_set('Europe/Warsaw');
 
     require_once('/var/www/vhosts/letthejourneybegin.5v.pl/httpdocs/includes/db_connect.php');
 	mysqli_report(MYSQLI_REPORT_STRICT);
@@ -12,7 +13,7 @@
 		}
 		else
 		{
-            $postID = $_GET['id'];
+            $postID=$_GET['id'];
             $query3 = $db->query("SELECT post_id, username, title, body, posted FROM posts WHERE post_id='$postID'");
             $row = $query3->fetch_assoc();
             $query3->free_result();
@@ -24,10 +25,35 @@
                 $row2['post_id'][$i]=$w['post_id'];
                 $row2['username'][$i]=$w['username'];
                 $row2['comment'][$i]=$w['comment'];
+                $row2['date'][$i]=$w['date'];
                 $i++;
             }
             $count=$query2->num_rows;
             $query2->free_result();
+
+            if(isset($_POST['comment']))
+            {
+                if($_POST['comment']=="")
+                {
+                    $_SESSION['error_comment']="Komentarz nie może być pusty!";
+                }
+                else
+                {
+                    $date=$_POST['date'];
+                    $user=$_POST['user'];
+                    $comm=$_POST['comment'];
+                    $id=$_POST['id'];
+                    if($db->query("INSERT INTO comments VALUES(NULL, '$id', '$user', '$comm', '$date')"))
+                    {
+                        header("Location:index.php");
+                    }
+                    else 
+                    {
+                        echo "blad";
+                    }
+                }
+            }
+
 		}
 		$db->close();
 	}
@@ -64,10 +90,31 @@
 			</div>
         </div>
         <?php
+                if(isset($_SESSION['uss']))
+                {
+                    echo "<div class='post'>";
+            
+                    echo "<form>
+                        <input value='".$_SESSION['uss']."' name='user' type='hidden'/>
+                        <input value='".date('Y-m-d H-s')."' name='date' type='hidden'/>
+                        <input value='".$postID."' name='id' type='hidden'/>
+                        <textarea name='comment' style='resize:none;width:600px;height:150px;' value=''></textarea><br/>
+                        <input value='Dodaj komentarz' name='btnsubmit' type='submit'/>
+                        </form>";
+                    
+                    if(isset($_SESSION['error_comment']))
+                    {
+                        echo '<p><span style="color:red;">'.$_SESSION['error_comment'].'</span></p>';
+                        unset($_SESSION['error_comment']);
+                    } 
+                    echo "</div>";
+                }
+        ?>
+        <?php
         for($i = 1; $i<=$count; $i++)
         {
             echo "<div class='post' style='background-color:##4e83d8;'>
-                <span style='font-size:19px;'>".$row2['username'][$i]."</span>
+                <span style='font-size:19px;'>".$row2['username'][$i]." </span><span style='font-size:10px;'>".$row2['date'][$i]."</span>
                 <p style='font-size:15px;'>".$row2['comment'][$i]."</p></div>";
         }
         ?>

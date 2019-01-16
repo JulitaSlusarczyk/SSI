@@ -17,7 +17,7 @@
 		}
 		else
 		{
-			$query2 = $db->query("SELECT * FROM posts ORDER BY posted");
+			$query2 = $db->query("SELECT * FROM posts ORDER BY posted DESC");
 			$i=1;
 			while($w = $query2->fetch_assoc())
 			{

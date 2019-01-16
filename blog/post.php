@@ -16,8 +16,18 @@
             $query3 = $db->query("SELECT post_id, username, title, body, posted FROM posts WHERE post_id='$postID'");
             $row = $query3->fetch_assoc();
             $query3->free_result();
-
-            
+            $query2 = $db->query("SELECT * FROM comments WHERE post_id='$postID'");
+            $i=1;
+            while($w = $query2->fetch_assoc())
+            {
+                $row2['comment_id'][$i]=$w['comment_id'];
+                $row2['post_id'][$i]=$w['post_id'];
+                $row2['username'][$i]=$w['username'];
+                $row2['comment'][$i]=$w['comment'];
+                $i++;
+            }
+            $count=$query2->num_rows;
+            $query2->free_result();
 		}
 		$db->close();
 	}
@@ -51,11 +61,16 @@
 				<span style='font-size:17px;'><br/><br/><?php echo $row['username']; ?></span>
 				<span style='font-size:12px;'><?php echo $row['posted']; ?></span><br/>
 				<br/><p><?php echo $row['body']; ?></p>
-			</div><br/>
-			<div class='comment' style='text-align:right;margin:0;margin-top:15px;font-size:13px;'>Komentarze()</div>
-			<div style='clear:both;'></div>
-		</div>
-
+			</div>
+        </div>
+        <?php
+        for($i = 1; $i<=$count; $i++)
+        {
+            echo "<div class='post' style='background-color:##4e83d8;'>
+                <span style='font-size:19px;'>".$row2['username'][$i]."</span>
+                <p style='font-size:15px;'>".$row2['comment'][$i]."</p></div>";
+        }
+        ?>
     </div>
 <?php
 	require_once('/var/www/vhosts/letthejourneybegin.5v.pl/httpdocs/look/sidebar.php');

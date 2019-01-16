@@ -36,10 +36,10 @@
         $password1=$_POST['password1'];
         $password2=$_POST['password2'];
 
-        if((strlen($password1)<8) || (strlen($password1) >20))
+        if((strlen($password1)<8))
         {
             $everythingOk=false;
-            $_SESSION['error_password']="Hasło musi posiadać od 8 do 20 znaków!";
+            $_SESSION['error_password']="Hasło musi posiadać więcej niż 8 znaków!";
         }
 
         if($password1!=$password2)
@@ -134,7 +134,6 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Blog o podróżowaniu - Rejestracja</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>

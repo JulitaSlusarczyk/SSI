@@ -17,7 +17,6 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Blog o podróżowaniu - Udana rejestracja</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>

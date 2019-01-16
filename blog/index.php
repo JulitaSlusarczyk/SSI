@@ -17,7 +17,7 @@
 		}
 		else
 		{
-			$query2 = $db->query("SELECT * FROM posts");
+			$query2 = $db->query("SELECT * FROM posts ORDER BY posted");
 			$i=1;
 			while($w = $query2->fetch_assoc())
 			{
@@ -30,7 +30,14 @@
 				$i++;
 			}
 			$count=$query2->num_rows;
-            $query2->free_result();
+			$query2->free_result();
+			for($i=1;$i<=$count;$i++)
+			{
+				$com=$_SESSION['post_id'][$i];
+				$query3 = $db->query("SELECT comment_id FROM comments WHERE post_id='$com'");
+				$com_count[$i]=$query3->num_rows;
+				$query3->free_result();
+			}
 		}
 		$db->close();
 	}
@@ -71,7 +78,7 @@
 						<br/><p>".$_SESSION['body'][$i]."</p>
 					</div>
 					<div class='czytajDalej' style='float:right; margin-top:10px;font-size:17px;'><a href='post.php?id=".$_SESSION['post_id'][$i]."'>Czytaj dalej</a></div><br/>
-					<div class='comment' style='text-align:right;margin:0;margin-top:15px;font-size:13px;'><a style='cursor:pointer;'>Komentarze()</a></div>
+					<div class='comment' style='text-align:right;margin:0;margin-top:15px;font-size:13px;'><a style='cursor:pointer;' href='post.php?id=".$_SESSION['post_id'][$i]."'>Komentarze(".$com_count[$i].")</a></div>
 					<div style='clear:both;'></div>
 					</div>";
 				}

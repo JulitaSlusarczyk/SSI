@@ -66,19 +66,17 @@
 				for($i = 1; $i<=$count; $i++)
 				{
 					echo "<div class='post'>
-						<div class='textpost'> <h2>".$_SESSION["title"][$i];
-					echo "</h2>
+						<div class='textpost'> <h2>".$_SESSION['title'][$i]. "</h2>
 						<span style='font-size:17px;'><br/><br/>".$_SESSION['p_username'][$i]."</span>
 						<span style='font-size:12px;'>".$_SESSION['posted'][$i]."</span><br/>
 						<br/><p>".$_SESSION['body'][$i]."</p>
 					</div>
-					<div class='czytajDalej' style='float:right; margin-top:10px;font-size:17px;'>Czytaj dalej</div><br/>
+					<div class='czytajDalej' style='float:right; margin-top:10px;font-size:17px;'><a>Czytaj dalej<a/></div><br/>
 					<div class='comment' style='text-align:right;margin:0;margin-top:15px;font-size:13px;'><a style='cursor:pointer;'>Komentarze()</a></div>
 					<div style='clear:both;''></div>
-				</div>";
+					</div>";
 				}
 			?>
-        	
         </div>
     <?php
 		require_once('/var/www/vhosts/letthejourneybegin.5v.pl/httpdocs/look/sidebar.php');

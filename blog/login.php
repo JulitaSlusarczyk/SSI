@@ -9,49 +9,46 @@
         mysqli_report(MYSQLI_REPORT_STRICT);
         try
         {
-        $db=new mysqli($host,$db_user,$db_pass,$db_name);
-        if($db->connect_errno!=0)
-        {
-            throw new Exception(mysqli_connect_errno());
-        }
-        else
-        {
-            $user = strip_tags($user);
-            $user = $db->real_escape_string($user);
-            $query = $db->query("SELECT * FROM users WHERE username='$user'");
-            
-            if($query->num_rows===1)
+            $db=new mysqli($host,$db_user,$db_pass,$db_name);
+            if($db->connect_errno!=0)
             {
-                $w=$query->fetch_assoc();
-                if(password_verify($pwrd,$w['password']))
+                throw new Exception(mysqli_connect_errno());
+            }
+            else
+            {
+                $user = strip_tags($user);
+                $user = $db->real_escape_string($user);
+                $query = $db->query("SELECT * FROM users WHERE username='$user'");
+            
+                if($query->num_rows===1)
                 {
-                    $_SESSION['uss']=$w['username'];
-                    $_SESSION['rola']=$w['rola'];
-                    $query->free_result();
-                    header('Location:index.php');
-                    exit();
+                    $w=$query->fetch_assoc();
+                    if(password_verify($pwrd,$w['password']))
+                    {
+                        $_SESSION['uss']=$w['username'];
+                        $_SESSION['rola']=$w['rola'];
+                        $query->free_result();
+                        header('Location:index.php');
+                        exit();
+                    }
+                    else 
+                    {
+                    $_SESSION['blad']="Błędny login i/lub hasło";
+                    }
                 }
-                else 
+                else
                 {
                     $_SESSION['blad']="Błędny login i/lub hasło";
                 }
             }
-            else
-            {
-                $_SESSION['blad']="Błędny login i/lub hasło";
-            }
+            $db->close();
         }
-        $db->close();
+        catch(Exception $e)
+        {
+            echo "<span style='color:red;'>Błąd serwera. Spróbuj ponownie później</span>";
         }
-    catch(Exception $e)
-    {
-        echo "<span style='color:red;'>Błąd serwera. Spróbuj ponownie później</span>";
-    }
-            
-
     }
         
-    
 ?>
 
 <!DOCTYPE html>

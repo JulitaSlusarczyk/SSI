@@ -3,7 +3,11 @@
     date_default_timezone_set('Europe/Warsaw');
 
     require_once('/var/www/vhosts/letthejourneybegin.5v.pl/httpdocs/includes/db_connect.php');
-	mysqli_report(MYSQLI_REPORT_STRICT);
+    mysqli_report(MYSQLI_REPORT_STRICT);
+    if($_GET['id']==NULL)
+    {
+        header("Location:index.php");
+    }
 	try
     {
         $db=new mysqli($host,$db_user,$db_pass,$db_name);
@@ -38,12 +42,13 @@
                 if($_POST['comment']=="")
                 {
                     $_SESSION['error_comment']="Komentarz nie może być pusty!";
+                    header("Location:post.php?id=".$_POST['id']."");
                 }
                 else
                 {
                     $date=$_POST['date'];
                     $user=$_POST['user'];
-                    $comm=$_POST['comment'];
+                    $comm=strip_tags($_POST['comment'],"<img>");
                     $id=$_POST['id'];
                     if($db->query("INSERT INTO comments VALUES(NULL, '$id', '$user', '$comm', '$date')"))
                     {
@@ -115,7 +120,12 @@
         {
             echo "<div class='post' style='background-color:##4e83d8;'>
                 <span style='font-size:19px;'>".$row2['username'][$i]." </span><span style='font-size:10px;'>".$row2['date'][$i]."</span>
-                <p style='font-size:15px;'>".$row2['comment'][$i]."</p></div>";
+                <p style='font-size:15px;'>".$row2['comment'][$i]."</p>";
+            if($_SESSION['uss']==$row2['username'][$i])
+            {   
+                echo "<a style='font-size:12px;cursor:pointer;'>Edytuj </a><a style='font-size:12px;cursor:pointer;'> Usuń</a>";
+            }
+            echo "</div>";
         }
         ?>
     </div>

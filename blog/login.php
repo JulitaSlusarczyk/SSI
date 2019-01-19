@@ -1,5 +1,9 @@
 <?php
     session_start();
+    if(isset($_SESSION['uss']))
+    {
+        header("Location:index.php");
+    }
     if(isset($_POST['submit']))
     {
         $user = $_POST['username'];

@@ -31,7 +31,9 @@
             $count=$query2->num_rows;
             $query2->free_result();
 
-            if(isset($_POST['comment']))
+            
+
+            if(isset($_POST['btnsubmit']))
             {
                 if($_POST['comment']=="")
                 {
@@ -45,15 +47,14 @@
                     $id=$_POST['id'];
                     if($db->query("INSERT INTO comments VALUES(NULL, '$id', '$user', '$comm', '$date')"))
                     {
-                        header("Location:index.php");
+                        header("Location:post.php?id=".$id."");
                     }
-                    else 
+                    else
                     {
-                        echo "blad";
+                        throw new Exception($db->error);
                     }
                 }
             }
-
 		}
 		$db->close();
 	}
@@ -69,7 +70,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Blog o podróżowaniu - <?php echo $row['title']; ?></title>
     <link rel="stylesheet" type="text/css"href="style.css" />
-    <script src="main.js"></script>
 </head>
 <body>
     <?php 
@@ -94,11 +94,11 @@
                 {
                     echo "<div class='post'>";
             
-                    echo "<form>
+                    echo "<form method='post' action='post.php'>
                         <input value='".$_SESSION['uss']."' name='user' type='hidden'/>
-                        <input value='".date('Y-m-d H-s')."' name='date' type='hidden'/>
+                        <input value='".date('Y-m-d H-i-s')."' name='date' type='hidden'/>
                         <input value='".$postID."' name='id' type='hidden'/>
-                        <textarea name='comment' style='resize:none;width:600px;height:150px;' value=''></textarea><br/>
+                        <textarea name='comment' style='resize:none;width:70%;height:150px;' value=''></textarea><br/>
                         <input value='Dodaj komentarz' name='btnsubmit' type='submit'/>
                         </form>";
                     

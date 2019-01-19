@@ -114,7 +114,6 @@
                         throw new Exception($db->error);
                     }
                 }
-
                 $db->close();
             }
         }
@@ -122,8 +121,6 @@
         {
             echo "<span style='color:red;'>Błąd serwera. Spróbuj ponownie później</span>";
         }
-    
-    
     }
 
 ?>

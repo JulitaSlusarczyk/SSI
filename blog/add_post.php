@@ -1,5 +1,7 @@
 <?php
     session_start();
+    date_default_timezone_set('Europe/Warsaw');
+    $anuluj=false;
     if($_SESSION['rola']=="admin" || $_SESSION['rola']=="moderator")
     {
 
@@ -8,6 +10,26 @@
     {
         header('Location: index.php');
         exit();
+    }
+    if(isset($_POST['textar']))
+    {
+        echo "i'm in";
+        if($_POST['textar']=="")
+        {
+            $anuluj=true;
+            echo "textar";
+            $_SESSION['error_textar']="Post nie może być pusty!";
+        }
+        if($_POST['titletext']=="")
+        {
+            $anuluj=true;
+            echo "titletext";
+            $_SESSION['error_titletext']="Post musi mieć tytuł!";
+        }
+        if($anuluj==false)
+        {
+            echo "poszlo";
+        }
     }
 ?>
 <!DOCTYPE html>
@@ -30,9 +52,36 @@
 <div id="glowna">
     <div class="post">
         <form method='post'>
-            <textarea id='textar'></textarea>
-            <br/>
-            <button type='submit' id='buttonsubmit'>Dodaj post</button>
+            <?php
+                echo "<input value=".$_SESSION['uss']." name='name' type='hidden'/>
+                <input value=".date('Y-m-d H-i-s')." name='date' type='hidden'/>           
+                <h2 style='margin:0;''>Tytuł</h2> <br/>"
+            ?>
+
+            <?php
+                if(isset($_SESSION['error_titletext']))
+                {
+                    echo '<p><span style="color:red;">'.$_SESSION['error_titletext'].'</span></p>';
+                    unset($_SESSION['error_titletext']);
+                }
+            ?>
+
+            <textarea id="titletext" value="" style="resize:none;width:70%;height:20px;"></textarea> <br/>
+            <h2 style="margin:0; margin-top:10px;">Treść posta</h2> <br/>
+
+            <?php
+                if(isset($_SESSION['error_textar']))
+                {
+                    echo '<p><span style="color:red;">'.$_SESSION['error_textar'].'</span></p>';
+                    unset($_SESSION['error_textar']);
+                }
+            ?>
+
+            <?php
+                echo "<textarea id='textar' value=''></textarea>
+                <br/>
+                <button type='submit' id='buttonsubmit'>Dodaj post</button>";
+            ?>
         </form>
     </div>
 </div>

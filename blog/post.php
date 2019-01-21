@@ -4,7 +4,7 @@
 
     require_once('/var/www/vhosts/letthejourneybegin.5v.pl/httpdocs/includes/db_connect.php');
     mysqli_report(MYSQLI_REPORT_STRICT);
-    if($_GET['id']==NULL)
+    if($_GET['id']==NULL || $_GET['del']==NULL)
     {
         header("Location:index.php");
     }
@@ -39,6 +39,20 @@
             $count=$query2->num_rows;
             $query2->free_result();
 
+            if($_GET['del']==0)
+            {
+
+            }
+            else
+            {
+                $us=$_SESSION['uss'];
+                $delete=$_GET['del'];
+                if($db->query("DELETE FROM comments WHERE username='$us' AND post_id='$postID' AND comment_id='$delete'"))
+                {
+                    header("Location:post.php?id=".$postID."&del=0");
+                }
+            }
+
             if(isset($_POST['btnsubmit']))
             {
                 if($_POST['comment']=="")
@@ -54,7 +68,7 @@
                     $id=$_POST['id'];
                     if($db->query("INSERT INTO comments VALUES(NULL, '$id', '$user', '$comm', '$date')"))
                     {
-                        header("Location:post.php?id=".$id."");
+                        header("Location:post.php?id=".$id."&del=0");
                     }
                     else
                     {
@@ -123,9 +137,12 @@
             echo "<div class='post' style='background-color:##4e83d8;'>
                 <span style='font-size:19px;'>".$row2['username'][$i]." </span><span style='font-size:10px;'>".$row2['date'][$i]."</span>
                 <p style='font-size:15px;'>".$row2['comment'][$i]."</p>";
-            if($_SESSION['uss']==$row2['username'][$i])
-            {   
-                echo "<a style='font-size:12px;cursor:pointer;'> Usuń</a>";
+            if(isset($_SESSION['uss']))
+            {
+                if($_SESSION['uss']==$row2['username'][$i] || $_SESSION['rola']=='admin')
+                {   
+                    echo "<a style='font-size:12px;cursor:pointer;' href='post.php?id=".$postID."&del=".$row2['comment_id'][$i]."'> Usuń</a>";
+                }
             }
             echo "</div>";
         }

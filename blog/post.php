@@ -51,6 +51,14 @@
                 {
                     header("Location:post.php?id=".$postID."&del=0");
                 }
+                
+                if($_SESSION['rola']=='admin')
+                {
+                    if($db->query("DELETE FROM comments WHERE post_id='$postID' AND comment_id='$delete'"))
+                    {
+                        header("Location:post.php?id=".$postID."&del=0");
+                    }
+                }
             }
 
             if(isset($_POST['btnsubmit']))

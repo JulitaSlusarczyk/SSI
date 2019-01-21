@@ -37,7 +37,7 @@
                     }
                     else 
                     {
-                    $_SESSION['blad']="Błędny login i/lub hasło";
+                        $_SESSION['blad']="Błędny login i/lub hasło";
                     }
                 }
                 else

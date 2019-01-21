@@ -12,7 +12,6 @@
 					{
 						echo "<div class='MenuOption'><a href='add_post.php'>Dodaj post</a></div>";
 					}
-
 				}
 				else
 				{

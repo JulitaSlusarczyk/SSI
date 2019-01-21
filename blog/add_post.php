@@ -11,24 +11,52 @@
         header('Location: index.php');
         exit();
     }
-    if(isset($_POST['textar']))
+    if(isset($_POST['titletext']))
     {
-        echo "i'm in";
         if($_POST['textar']=="")
         {
             $anuluj=true;
-            echo "textar";
             $_SESSION['error_textar']="Post nie może być pusty!";
         }
         if($_POST['titletext']=="")
         {
             $anuluj=true;
-            echo "titletext";
             $_SESSION['error_titletext']="Post musi mieć tytuł!";
         }
         if($anuluj==false)
         {
-            echo "poszlo";
+            require_once('/var/www/vhosts/letthejourneybegin.5v.pl/httpdocs/includes/db_connect.php');
+            mysqli_report(MYSQLI_REPORT_STRICT);
+            try
+            {
+                $db=new mysqli($host,$db_user,$db_pass,$db_name);
+                if($db->connect_errno!=0)
+                {
+                    throw new Exception(mysqli_connect_errno());
+                }
+                else
+                {
+                    $date=$_POST['date'];
+                    $user=$_POST['user'];
+                    $titletext=$_POST['titletext'];
+                    $textar=strip_tags($_POST['textar'],'<img><a><p><span><body>');
+                    $id=$_POST['id'];
+                    $category=$_POST['select'];
+                    if($db->query("INSERT INTO posts VALUES(NULL, '$user', '$titletext', '$textar', '$category' , '$date')"))
+                    {
+                        header("Location:index.php");
+                    }
+                    else
+                    {
+                        throw new Exception($db->error);
+                    }
+                }
+                $db->close();
+            }
+            catch(Exception $e)
+            {
+                echo "<span style='color:red;'>Błąd serwera. Spróbuj ponownie później</span>";
+            }
         }
     }
 ?>
@@ -53,7 +81,7 @@
     <div class="post">
         <form method='post'>
             <?php
-                echo "<input value=".$_SESSION['uss']." name='name' type='hidden'/>
+                echo "<input value=".$_SESSION['uss']." name='user' type='hidden'/>
                 <input value=".date('Y-m-d H-i-s')." name='date' type='hidden'/>           
                 <h2 style='margin:0;''>Tytuł</h2> <br/>"
             ?>
@@ -66,7 +94,7 @@
                 }
             ?>
 
-            <textarea id="titletext" value="" style="resize:none;width:70%;height:20px;"></textarea> <br/>
+            <textarea name="titletext" value="" style="resize:none;width:70%;height:20px;"></textarea> <br/>
             <h2 style="margin:0; margin-top:10px;">Treść posta</h2> <br/>
 
             <?php
@@ -78,10 +106,17 @@
             ?>
 
             <?php
-                echo "<textarea id='textar' value=''></textarea>
+                echo "<textarea name='textar' value=''></textarea>
                 <br/>
-                <button type='submit' id='buttonsubmit'>Dodaj post</button>";
+                <button type='submit' name='buttonsubmit'>Dodaj post</button>";
             ?>
+
+            <select name='select' required>
+                <option value="Tag1">Tag1</option>
+                <option value="Tag2">Tag2</option>
+                <option value="Tag3">Tag3</option>
+                <option value="Tag4">Tag4</option>
+            </select>
         </form>
     </div>
 </div>

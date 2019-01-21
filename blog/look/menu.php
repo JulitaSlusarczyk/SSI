@@ -10,7 +10,7 @@
 					}
 					if($_SESSION['rola']=="moderator")
 					{
-						echo "<div class='MenuOption'>Dodaj post</div>";
+						echo "<div class='MenuOption'><a href='add_post.php'>Dodaj post</a></div>";
 					}
 
 				}

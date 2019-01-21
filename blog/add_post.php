@@ -4,7 +4,7 @@
     $anuluj=false;
     if($_SESSION['rola']=="admin" || $_SESSION['rola']=="moderator")
     {
-
+        echo date('Y-m-d H-i-s');
     }
     else
     {
@@ -36,13 +36,13 @@
                 }
                 else
                 {
-                    $date=$_POST['date'];
+                    $data=$_POST['data'];
                     $user=$_POST['user'];
                     $titletext=$_POST['titletext'];
-                    $textar=strip_tags($_POST['textar'],'<img><a><p><span><body>');
+                    $textar=strip_tags($_POST['textar'],'<img><a><p><span><strong><em><ol><ul><li>');
                     $id=$_POST['id'];
                     $category=$_POST['select'];
-                    if($db->query("INSERT INTO posts VALUES(NULL, '$user', '$titletext', '$textar', '$category' , '$date')"))
+                    if($db->query("INSERT INTO posts VALUES(NULL, '$user', '$titletext', '$textar', '$category' , '$data')"))
                     {
                         header("Location:index.php");
                     }
@@ -81,8 +81,8 @@
     <div class="post">
         <form method='post'>
             <?php
-                echo "<input value=".$_SESSION['uss']." name='user' type='hidden'/>
-                <input value=".date('Y-m-d H-i-s')." name='date' type='hidden'/>           
+                echo "<input value='".$_SESSION['uss']."' name='user' type='hidden'/>
+                <input value='".date('Y-m-d H-i-s')."' name='data' type='hidden'/>           
                 <h2 style='margin:0;''>Tytuł</h2> <br/>"
             ?>
 
@@ -108,15 +108,16 @@
             <?php
                 echo "<textarea name='textar' value=''></textarea>
                 <br/>
+                <select name='select' required>
+                    <option value='Tag1'>Tag1</option>
+                    <option value='Tag2'>Tag2</option>
+                    <option value='Tag3'>Tag3</option>
+                    <option value='Tag4'>Tag4</option>
+                </select>
+                <br/><br/>
                 <button type='submit' name='buttonsubmit'>Dodaj post</button>";
             ?>
 
-            <select name='select' required>
-                <option value="Tag1">Tag1</option>
-                <option value="Tag2">Tag2</option>
-                <option value="Tag3">Tag3</option>
-                <option value="Tag4">Tag4</option>
-            </select>
         </form>
     </div>
 </div>

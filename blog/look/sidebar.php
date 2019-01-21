@@ -9,10 +9,10 @@
 	<div id="tagi">
 		<br/> <h4>Tagi </h4>
 			<ul id="tags">
-				<li><a>Tag1</a></li>
-				<li><a>Tag2</a></li>
-				<li><a>Tag3</a></li>
-				<li><a>Tag4</a></li>
+				<li><a href="tags.php?tag=tag1">Tag1</a></li>
+				<li><a href="tags.php?tag=tag2">Tag2</a></li>
+				<li><a href="tags.php?tag=tag3">Tag3</a></li>
+				<li><a href="tags.php?tag=tag4">Tag4</a></li>
 			</ul>
 		</div>
     </div>

@@ -4,7 +4,7 @@
     $anuluj=false;
     if($_SESSION['rola']=="admin" || $_SESSION['rola']=="moderator")
     {
-        echo date('Y-m-d H-i-s');
+        
     }
     else
     {
@@ -95,7 +95,7 @@
             ?>
 
             <textarea name="titletext" value="" style="resize:none;width:70%;height:20px;"></textarea> <br/>
-            <h2 style="margin:0; margin-top:10px;">Treść posta</h2> <br/>
+            <h2 style="margin:0; margin-top:10px;">Treść posta</h2> 
 
             <?php
                 if(isset($_SESSION['error_textar']))
@@ -103,7 +103,7 @@
                     echo '<p><span style="color:red;">'.$_SESSION['error_textar'].'</span></p>';
                     unset($_SESSION['error_textar']);
                 }
-            ?>
+            ?> <br/>
 
             <?php
                 echo "<textarea name='textar' value=''></textarea>

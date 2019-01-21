@@ -20,6 +20,10 @@
             $postID=$_GET['id'];
             $query3 = $db->query("SELECT post_id, username, title, body, posted FROM posts WHERE post_id='$postID'");
             $row = $query3->fetch_assoc();
+            if($query3->num_rows==0)
+            {
+                header('Location:index.php');
+            }
             $query3->free_result();
             $query2 = $db->query("SELECT * FROM comments WHERE post_id='$postID'");
             $i=1;
@@ -34,8 +38,6 @@
             }
             $count=$query2->num_rows;
             $query2->free_result();
-
-            
 
             if(isset($_POST['btnsubmit']))
             {
@@ -123,7 +125,7 @@
                 <p style='font-size:15px;'>".$row2['comment'][$i]."</p>";
             if($_SESSION['uss']==$row2['username'][$i])
             {   
-                echo "<a style='font-size:12px;cursor:pointer;'>Edytuj </a><a style='font-size:12px;cursor:pointer;'> Usuń</a>";
+                echo "<a style='font-size:12px;cursor:pointer;'> Usuń</a>";
             }
             echo "</div>";
         }

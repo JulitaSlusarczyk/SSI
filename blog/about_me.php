@@ -34,8 +34,13 @@
                     Mucius urbanitas dissentiet no pro. Natum solet reprehendunt in duo. Ea vim quem soleat mentitum, suas alienum conclusionemque qui et. Id senserit mediocrem sit, has id nullam invenire. Graece neglegentur et mea, appetere postulant elaboraret at cum.
 
 					Diceret evertitur te sed, et cum tincidunt quaerendum. Essent antiopam no nec, in solum dicant qui, eu cum mediocrem consetetur. Id posse movet eruditi usu, eu vim mandamus inimicus prodesset. In cum augue noster detraxit, homero lobortis at vim, alia quaestio volutpat sit in. Eam dicit omnium ex, te mucius oportere quo.
-		</p>
-
+		</p> </div>
+        <div class='post'>
+        <p><strong>Kontakt</strong></p>
+        <p>Jane Doe</p>
+        <p>address</p>
+        <p>address</p>
+        <p>tel number</p>
     </div>
 </div>
 <?php

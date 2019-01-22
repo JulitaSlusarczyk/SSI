@@ -166,6 +166,8 @@
                     </form>";
                 }
             }
+
+            //ustawienia uzytkownikow
             if($_GET['menu']=='ust')
             {
                 echo "<table border='1'>

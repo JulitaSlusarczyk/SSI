@@ -4,9 +4,13 @@
 
     require_once('/var/www/vhosts/letthejourneybegin.5v.pl/httpdocs/includes/db_connect.php');
     mysqli_report(MYSQLI_REPORT_STRICT);
-    if($_GET['id']==NULL || $_GET['del']==NULL)
+    if($_GET['id']==NULL)
     {
         header("Location:index.php");
+    }
+    if($_GET['del']==NULL)
+    {
+        header("Location:post.php?id=".$_GET['id']."&del=0");
     }
 	try
     {

@@ -21,7 +21,7 @@
             $i=1;
             while($w = $query3->fetch_assoc())
             {
-                $_SESSION['post_id'][$i] = $w['post_id'];
+                $_SESSION['pt_id'][$i] = $w['post_id'];
 				$_SESSION['p_username'][$i] = $w['username'];
 				$_SESSION['title'][$i]=$w['title'];
 				$_SESSION['body'][$i]=$w['body'];
@@ -36,7 +36,7 @@
             $query3->free_result();
             for($i=1;$i<=$count;$i++)
 			{
-				$com=$_SESSION['post_id'][$i];
+				$com=$_SESSION['pt_id'][$i];
 				$query2 = $db->query("SELECT comment_id FROM comments WHERE post_id='$com'");
 				$com_count[$i]=$query2->num_rows;
 				$query2->free_result();
@@ -71,13 +71,13 @@
 			for($i = 1; $i<=$count; $i++)
 			{
 				echo "<div class='post'>
-					<div class='textpost'> <h2><a href='post.php?id=".$_SESSION['post_id'][$i]."'>".$_SESSION['title'][$i]. "</a></h2>
+					<div class='textpost'> <h2><a href='post.php?id=".$_SESSION['pt_id'][$i]."&del=0'>".$_SESSION['title'][$i]. "</a></h2>
 					<span style='font-size:17px;'><br/><br/>".$_SESSION['p_username'][$i]."</span>
 					<span style='font-size:12px;'>".$_SESSION['posted'][$i]."</span><br/>
 					<br/><p>".$_SESSION['body'][$i]."</p>
 				</div>
-				<div class='czytajDalej' style='float:right; margin-top:10px;font-size:17px;'><a href='post.php?id=".$_SESSION['post_id'][$i]."'>Czytaj dalej</a></div><br/>
-				<div class='comment' style='text-align:right;margin:0;margin-top:15px;font-size:13px;'><a style='cursor:pointer;' href='post.php?id=".$_SESSION['post_id'][$i]."'>Komentarze(".$com_count[$i].")</a></div>
+				<div class='czytajDalej' style='float:right; margin-top:10px;font-size:17px;'><a href='post.php?id=".$_SESSION['pt_id'][$i]."&del=0'>Czytaj dalej</a></div><br/>
+				<div class='comment' style='text-align:right;margin:0;margin-top:15px;font-size:13px;'><a style='cursor:pointer;' href='post.php?id=".$_SESSION['pt_id'][$i]."&del=0'>Komentarze(".$com_count[$i].")</a></div>
 				<div style='clear:both;'></div>
 				</div>";
 			}

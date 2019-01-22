@@ -20,6 +20,7 @@
             }
             else
             {
+                //menu posty
                 $query2 = $db->query("SELECT * FROM posts");
                 $i=1;
                 while($w=$query2->fetch_assoc())
@@ -37,22 +38,24 @@
                 if($_GET['del']!=0 && $_GET['menu']=='post')
                 {
                     $delete=$_SESSION['pst_id'][$_GET['del']];
-                    if($db->query("DELETE FROM posts WHERE user_id='$delete'"))
+                    if($db->query("DELETE FROM posts WHERE post_id='$delete'"))
                     {
                         header("Location:admin.php?menu=post&edit=0&del=0");
                     }
                 }
-                if(isset($_POST['sub2']) && $_GET['menu']=='post')
+                if(isset($_POST['sub2']))
                 {
                     $ti=$_POST['titlep'];
                     $bo=$_POST['bod'];
-                    $pid=$_POST['id'];
+                    $pid=$_SESSION['pst_id'][$_POST['id2']];
                     $se2=$_POST['select2'];
                     if($db->query("UPDATE posts SET title='$ti', body='$bo', category='$se2' WHERE post_id='$pid'"))
                     {
                         header("Location:admin.php?menu=post&edit=0&del=0");
                     }
                 }
+
+                //menu uzytkownicy
 
                 $query = $db->query("SELECT * FROM users");
                 $i=1;
@@ -75,10 +78,10 @@
                         header("Location:admin.php?menu=ust&edit=0&del=0");
                     }
                 }
-                if(isset($_POST['sub']) && $_GET['menu']=='ust')
+                if(isset($_POST['sub']))
                 {
                     $em=$_POST['emaill'];
-                    $uid=$_POST['id'];
+                    $uid=$_SESSION['usern'][$_POST['id']];
                     $se=$_POST['select'];
                     if($db->query("UPDATE users SET email='$em', rola='$se' WHERE user_id='$uid'"))
                     {
@@ -148,7 +151,7 @@
                     $a=$_GET['edit'];
                     echo "Edytuj <br/><br/>
                     <form method='post' action='admin.php'>
-                    <input type='hidden' name='id' value='".$_SESSION['pst_id'][$a]."'/>
+                    <input type='hidden' name='id2' value='".$a."'/>
                     Username: ".$_SESSION['use'][$a]." <br/><br/>
                     Tytuł: <input type='text' name='titlep' value='".$_SESSION['titlep'][$a]."'/><br/><br/>
                     <textarea rows='12' cols='70' name='bod' style='resize:none;'>".$_SESSION['bodyy'][$a]."</textarea><br/><br/>
@@ -192,7 +195,7 @@
                     $a=$_GET['edit'];
                     echo "Edytuj <br/><br/>
                     <form method='post' action='admin.php'>
-                    <input type='hidden' name='id' value='".$_SESSION['usr_id'][$a]."'/>
+                    <input type='hidden' name='id' value='".$a."'/>
                     Username: ".$_SESSION['usern'][$a]." 
                     E-mail: <input type='text' name='emaill' value='".$_SESSION['emaill'][$a]."'/>
                     Rola: 

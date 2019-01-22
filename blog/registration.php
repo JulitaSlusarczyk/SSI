@@ -104,7 +104,7 @@
                 if($everythingOk==true)
                 {
                     //dodanie do bazy
-                    if($db->query("INSERT INTO users VALUES(NULL, '$username', '$pwrd_hash', '$email', 'None')"))
+                    if($db->query("INSERT INTO users VALUES(NULL, '$username', '$pwrd_hash', '$email', 'none')"))
                     {
                         $_SESSION['register_success']=true;
                         header("Location:register_success.php");

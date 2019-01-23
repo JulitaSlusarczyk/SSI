@@ -30,6 +30,7 @@
                     if(password_verify($pwrd,$w['password']))
                     {
                         $_SESSION['uss']=$w['username'];
+                        $_SESSION['email']=$w['email'];
                         $_SESSION['rola']=$w['rola'];
                         $query->free_result();
                         header('Location:index.php');

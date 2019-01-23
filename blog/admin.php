@@ -81,7 +81,7 @@
                 if(isset($_POST['sub']))
                 {
                     $em=$_POST['emaill'];
-                    $uid=$_SESSION['usern'][$_POST['id']];
+                    $uid=$_SESSION['usr_id'][$_POST['id']];
                     $se=$_POST['select'];
                     if($db->query("UPDATE users SET email='$em', rola='$se' WHERE user_id='$uid'"))
                     {
@@ -201,7 +201,7 @@
                     Username: ".$_SESSION['usern'][$a]." 
                     E-mail: <input type='text' name='emaill' value='".$_SESSION['emaill'][$a]."'/>
                     Rola: 
-                    <select name='select' required>
+                    <select name='select'>
                         <option value='admin'>admin</option>
                         <option value='moderator'>moderator</option>
                         <option value='none'>none</option>

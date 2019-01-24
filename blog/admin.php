@@ -20,6 +20,37 @@
             }
             else
             {
+                //menu tagi
+                $query3 = $db->query("SELECT * FROM categories");
+                $i=1;
+                while($w = $query3->fetch_assoc())
+                {
+                    $_SESSION['categ_id'][$i] = $w['category_id'];
+                    $_SESSION['categ'][$i] = $w['category'];
+                    $i++;
+                }
+                $count3=$query3->num_rows;
+                $query3->free_result();
+
+                if($_GET['del']!=0 && $_GET['menu']=='tags')
+                {
+                    $delete=$_SESSION['categ_id'][$_GET['del']];
+                    if($db->query("DELETE FROM categories WHERE category_id='$delete'"))
+                    {
+                        header("Location:admin.php?menu=tags&edit=0&del=0");
+                    }
+                }
+
+                if(isset($_POST['sub3']))
+                {
+                    $ctg=$_POST['edit_category'];
+                    $cid=$_SESSION['categ_id'][$_POST['cate_id']];
+                    if($db->query("UPDATE categories SET category='$ctg' WHERE category_id='$cid'"))
+                    {
+                        header("Location:admin.php?menu=tags&edit=0&del=0");
+                    }
+                }
+
                 //menu posty
                 $query2 = $db->query("SELECT * FROM posts");
                 $i=1;
@@ -117,10 +148,45 @@
     <div class='post'>
         <div id='menu'>
             <div class='MenuOption' style="float:left;"><a href="admin.php?menu=ust&edit=0&del=0">Użytkownicy</a></div>
-            <div class='MenuOption' style="float:left;border-right: 2px dotted #cccccc;"><a href="admin.php?menu=post&edit=0&del=0">Posty</a></div>
+            <div class='MenuOption' style="float:left;"><a href="admin.php?menu=post&edit=0&del=0">Posty</a></div>
+            <div class='MenuOption' style="float:left;border-right: 2px dotted #cccccc;"><a href="admin.php?menu=tags&edit=0&del=0">Tagi</a></div>
             <div style='clear:both;'></div>
         </div>
             <br/>
+            <?php
+                if($_GET['menu']=='tags')
+                {
+                    echo "<table border='1'>
+                    <tr>
+                    <th>Category_id</th>
+                    <th>Nazwa</th>
+                    <th>Edycja</th>
+                    <th>Usuń</th>
+                    </tr>";
+                    
+                    for($i=1;$i<=$count3;$i++)
+                    {
+                        echo "<tr>";
+                        echo "<td>".$_SESSION['category_id'][$i]."</td>";
+                        echo "<td>".$_SESSION['category'][$i]."</td>";
+                        echo "<td><a href='admin.php?menu=tags&edit=".$i."&del=0' style='cursor:pointer;'>Edytuj</a></td>";
+                        echo "<td><a href='admin.php?menu=tags&edit=0&del=".$i."' style='cursor:pointer;'>Usuń</a></td>";
+                        echo "</tr>";
+                    }
+                    echo "</table><br/>";
+                }
+                if($_GET['edit']!=0)
+                {
+                    $a=$_GET['edit'];
+                    echo "Edytuj <br/><br/>
+                    <form method='post' action='admin.php'>
+                    <input type='hidden' name='cate_id' value='".$a."'/>
+                    Nazwa: <input type='text' name='edit_category' value='".$_SESSION['categ'][$a]."'/>
+                    <input type='submit' value='Zatwierdź zmiany' name='sub3'/>
+                    </form>";
+                }
+
+            ?>
             <?php
             if($_GET['menu']=='post')
             {
@@ -156,12 +222,12 @@
                     Tytuł: <input type='text' name='titlep' value='".$_SESSION['titlep'][$a]."'/><br/><br/>
                     <textarea rows='12' cols='70' name='bod' style='resize:none;'>".$_SESSION['bodyy'][$a]."</textarea><br/><br/>
                     Tagi: 
-                    <select name='select2'>
-                        <option value='Tag1'>Tag1</option>
-                        <option value='Tag2'>Tag2</option>
-                        <option value='Tag3'>Tag3</option>
-                        <option value='Tag4'>Tag4</option>
-                    </select><br/><br/>
+                    <select name='select2'>";
+                    for($i=1;$i<=$count3;$i++)
+                    {
+                        echo "<option value='".$_SESSION['category']."'>".$_SESSION['category']."</option>";
+                    }
+                    echo "</select><br/><br/>
                     <input type='submit' value='Zatwierdź zmiany' name='sub2'/>
                     </form>";
                 }

@@ -50,6 +50,25 @@
                         header("Location:admin.php?menu=tags&edit=0&del=0");
                     }
                 }
+                if(isset($_POST['new_btn']))
+                {
+                    if($_POST['new_category']=="")
+                    {
+
+                    }
+                    else
+                    {
+                        $new_c=$_POST['new_category'];
+                        if($db->query("INSERT INTO categories VALUES(NULL, '$new_c')"))
+                        {
+                            header("Location:admin.php?menu=tags&edit=0&del=0");
+                        }
+                        else
+                        {
+                            throw new Exception($db->error);
+                        }
+                    }
+                }
 
                 //menu posty
                 $query2 = $db->query("SELECT * FROM posts");
@@ -149,13 +168,16 @@
         <div id='menu'>
             <div class='MenuOption' style="float:left;"><a href="admin.php?menu=ust&edit=0&del=0">Użytkownicy</a></div>
             <div class='MenuOption' style="float:left;"><a href="admin.php?menu=post&edit=0&del=0">Posty</a></div>
-            <div class='MenuOption' style="float:left;border-right: 2px dotted #cccccc;"><a href="admin.php?menu=tags&edit=0&del=0">Tagi</a></div>
+            <div class='MenuOption' style="float:left;border-right: 2px dotted #cccccc;"><a href="admin.php?menu=tags&edit=0&del=0">Kategorie</a></div>
             <div style='clear:both;'></div>
         </div>
             <br/>
             <?php
                 if($_GET['menu']=='tags')
                 {
+                    echo "<form method='post' action='admin.php'>
+                    <input name='new_category' type='text'/> &nbsp;";
+                    echo "<input value='Dodaj kategorię' name='new_btn' type='submit'/></form><br/><br/>";
                     echo "<table border='1'>
                     <tr>
                     <th>Category_id</th>
@@ -221,11 +243,11 @@
                     Username: ".$_SESSION['use'][$a]." <br/><br/>
                     Tytuł: <input type='text' name='titlep' value='".$_SESSION['titlep'][$a]."'/><br/><br/>
                     <textarea rows='12' cols='70' name='bod' style='resize:none;'>".$_SESSION['bodyy'][$a]."</textarea><br/><br/>
-                    Tagi: 
+                    Kategorie: 
                     <select name='select2'>";
                     for($i=1;$i<=$count3;$i++)
                     {
-                        echo "<option value='".$_SESSION['category']."'>".$_SESSION['category']."</option>";
+                        echo "<option value='".$_SESSION['category'][$i]."'>".$_SESSION['category'][$i]."</option>";
                     }
                     echo "</select><br/><br/>
                     <input type='submit' value='Zatwierdź zmiany' name='sub2'/>

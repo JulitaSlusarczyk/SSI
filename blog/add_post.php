@@ -11,6 +11,19 @@
         header('Location: index.php');
         exit();
     }
+    require_once('/var/www/vhosts/letthejourneybegin.5v.pl/httpdocs/includes/db_connect.php');
+    $db=new mysqli($host,$db_user,$db_pass,$db_name);
+    $query3 = $db->query("SELECT * FROM categories");
+    $i=1;
+    while($w = $query3->fetch_assoc())
+    {
+        $_SESSION['categ_id_ap'][$i] = $w['category_id'];
+        $_SESSION['categ_ap'][$i] = $w['category'];
+        $i++;
+    }
+    $count3=$query3->num_rows;
+    $query3->free_result();
+    $db->close();
     if(isset($_POST['titletext']))
     {
         if($_POST['textar']=="")
@@ -25,7 +38,6 @@
         }
         if($anuluj==false)
         {
-            require_once('/var/www/vhosts/letthejourneybegin.5v.pl/httpdocs/includes/db_connect.php');
             mysqli_report(MYSQLI_REPORT_STRICT);
             try
             {
@@ -108,12 +120,12 @@
             <?php
                 echo "<textarea name='textar' value=''></textarea>
                 <br/>
-                <select name='select' required>
-                    <option value='Tag1'>Tag1</option>
-                    <option value='Tag2'>Tag2</option>
-                    <option value='Tag3'>Tag3</option>
-                    <option value='Tag4'>Tag4</option>
-                </select>
+                <select name='select' required>";
+                for($i=1;$i<=$count3;$i++)
+                {
+                    echo "<option value='".$_SESSION['categ_ap'][$i]."'>".$_SESSION['categ_ap'][$i]."</option>";
+                }
+                echo "</select>
                 <br/><br/>
                 <button type='submit' name='buttonsubmit'>Dodaj post</button>";
             ?>

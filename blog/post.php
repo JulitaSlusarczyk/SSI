@@ -49,11 +49,12 @@
                 $date=$_POST['dateedit'];
                 $comm=strip_tags($_POST['commentedit'],"<img>");
                 $com_id=$_POST['com_id'];
+                $p_id=$_POST['p_id'];
                 if($_POST['userna']==$us || $_SESSION['rola']=='admin')
                 {
-                    if($db->query("UPDATE comments SET comment_date='$date' comment='$comm' WHERE comment_id='$com_id'"))
+                    if($db->query("UPDATE comments SET comment_date='$date', comment='$comm' WHERE comment_id='$com_id'"))
                     {
-                        header("Location:post.php?id=".$postID."&del=0");
+                        header("Location:post.php?id=".$p_id."&del=0");
                     }
                     else
                     {
@@ -169,6 +170,7 @@
                     <input value='".date('Y-m-d H-i-s')."' name='dateedit' type='hidden'/>
                     <input value='".$row2['username'][$_GET['edit']]."' name='userna' type='hidden'/>
                     <input value='".$row2['comment_id'][$_GET['edit']]."' name='com_id' type='hidden'/>
+                    <input value='".$postID."' name='p_id' type='hidden'/>
                     <textarea name='commentedit' style='resize:none;width:70%;height:150px;' value=''>".$row2['comment'][$_GET['edit']]."</textarea><br/><br/>
                     <input value='Edytuj komentarz' name='btnsubmitedit' type='submit'/>
                     </form>";

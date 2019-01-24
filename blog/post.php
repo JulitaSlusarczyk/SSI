@@ -37,11 +37,30 @@
                 $row2['post_id'][$i]=$w['post_id'];
                 $row2['username'][$i]=$w['username'];
                 $row2['comment'][$i]=$w['comment'];
-                $row2['date'][$i]=$w['date'];
+                $row2['date'][$i]=$w['comment_date'];
                 $i++;
             }
             $count=$query2->num_rows;
             $query2->free_result();
+
+            if(isset($_POST['btnsubmitedit']))
+            {
+                $us=$_SESSION['uss'];
+                $date=$_POST['dateedit'];
+                $comm=strip_tags($_POST['commentedit'],"<img>");
+                $com_id=$_POST['com_id'];
+                if($_POST['userna']==$us || $_SESSION['rola']=='admin')
+                {
+                    if($db->query("UPDATE comments SET comment_date='$date' comment='$comm' WHERE comment_id='$com_id'"))
+                    {
+                        header("Location:post.php?id=".$postID."&del=0");
+                    }
+                    else
+                    {
+                        throw new Exception($db->error);
+                    }
+                }
+            }
 
             if($_GET['del']==0)
             {
@@ -123,25 +142,44 @@
 			</div>
         </div>
         <?php
-                if(isset($_SESSION['uss']))
+            if(isset($_SESSION['uss']) && !isset($_GET['edit']))
+            {
+                echo "<div class='post'>";
+        
+                echo "<form method='post' action='post.php'>
+                    <input value='".$_SESSION['uss']."' name='user' type='hidden'/>
+                    <input value='".date('Y-m-d H-i-s')."' name='date' type='hidden'/>
+                    <input value='".$postID."' name='id' type='hidden'/>
+                    <textarea name='comment' style='resize:none;width:70%;height:150px;' value=''></textarea><br/><br/>
+                    <input value='Dodaj komentarz' name='btnsubmit' type='submit'/>
+                    </form>";
+                
+                if(isset($_SESSION['error_comment']))
                 {
-                    echo "<div class='post'>";
-            
-                    echo "<form method='post' action='post.php'>
-                        <input value='".$_SESSION['uss']."' name='user' type='hidden'/>
-                        <input value='".date('Y-m-d H-i-s')."' name='date' type='hidden'/>
-                        <input value='".$postID."' name='id' type='hidden'/>
-                        <textarea name='comment' style='resize:none;width:70%;height:150px;' value=''></textarea><br/>
-                        <input value='Dodaj komentarz' name='btnsubmit' type='submit'/>
-                        </form>";
-                    
-                    if(isset($_SESSION['error_comment']))
-                    {
-                        echo '<p><span style="color:red;">'.$_SESSION['error_comment'].'</span></p>';
-                        unset($_SESSION['error_comment']);
-                    } 
-                    echo "</div>";
-                }
+                    echo '<p><span style="color:red;">'.$_SESSION['error_comment'].'</span></p>';
+                    unset($_SESSION['error_comment']);
+                } 
+                echo "</div>";
+            }
+            if(isset($_SESSION['uss']) && isset($_GET['edit']))
+            {
+                echo "<div class='post'>";
+        
+                echo "<form method='post' action='post.php'>
+                    <input value='".date('Y-m-d H-i-s')."' name='dateedit' type='hidden'/>
+                    <input value='".$row2['username'][$_GET['edit']]."' name='userna' type='hidden'/>
+                    <input value='".$row2['comment_id'][$_GET['edit']]."' name='com_id' type='hidden'/>
+                    <textarea name='commentedit' style='resize:none;width:70%;height:150px;' value=''>".$row2['comment'][$_GET['edit']]."</textarea><br/><br/>
+                    <input value='Edytuj komentarz' name='btnsubmitedit' type='submit'/>
+                    </form>";
+                
+                if(isset($_SESSION['error_comment']))
+                {
+                    echo '<p><span style="color:red;">'.$_SESSION['error_comment'].'</span></p>';
+                    unset($_SESSION['error_comment']);
+                } 
+                echo "</div>";
+            }
         ?>
         <?php
         for($i = 1; $i<=$count; $i++)
@@ -153,7 +191,7 @@
             {
                 if($_SESSION['uss']==$row2['username'][$i] || $_SESSION['rola']=='admin')
                 {   
-                    echo "<a style='font-size:12px;cursor:pointer;' href='post.php?id=".$postID."&del=".$row2['comment_id'][$i]."'> Usuń</a>";
+                    echo "<a href='post.php?id=".$postID."&del=0&edit=".$i."' style='font-size:12px;cursor:pointer;'>Edytuj &nbsp;</a> <a style='font-size:12px;cursor:pointer;' href='post.php?id=".$postID."&del=".$row2['comment_id'][$i]."'> Usuń</a>";
                 }
             }
             echo "</div>";
